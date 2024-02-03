@@ -1,51 +1,26 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int result[]={-1,-1};
-    
-        int first=Find(nums,target,true);
-        int last=Find(nums,target,false);
-         if (first!=-1)
-         {
-             result[0]=first;
-             result[1]=last;
-             
-         }
-        
-        return result;
-        
-    }
-    int Find(int nums[],int target,boolean left)
-    {   int ans=-1;
-        int s=0;
-        int e=nums.length-1;
-        
-        while(s<=e)
+        int arr[]=new int[2];
+        int start=-1;
+        int end =-1;
+        for(int i=0;i<nums.length;i++)
         {
-            int mid=s+(e-s)/2;
-            if (nums[mid]>target)
+            if (nums[i]==target)
             {
-                e=mid-1;
+                start=i;
+                break;
             }
-            else if (nums[mid]<target)
-            {
-                s=mid+1;
-            }
-            else
-            {ans=mid;
-                if (left)
-                {    
-                    e=mid-1;
-
-                }
-                else{
-                    
-                    s=mid+1;
-                }
-
-            }
-            
         }
-        return ans;
-
+        for(int i=0;i<nums.length;i++)
+        {
+            if (nums[i]==target)
+            {
+                end=i;
+                
+            }
+        }
+        arr[0]=start;
+        arr[1]=end;
+        return arr;
     }
 }
