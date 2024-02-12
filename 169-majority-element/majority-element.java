@@ -1,9 +1,18 @@
 class Solution {
     public int majorityElement(int[] nums) {
-      //when array is sorted the middle element will be the element
-      //that appeared more than n/2 times
-      Arrays.sort(nums);
-      return nums[nums.length/2];
+      HashMap<Integer,Integer> map=new HashMap<>();
+      for(int n:nums)
+      {
+          map.put(n,map.getOrDefault(n,0)+1);
+      }
+      for(int n:nums)
+      {
+          if (map.get(n)>nums.length/2)
+          {
+              return n;
+          }
+      }
+      return -1;
         
     }
 }
