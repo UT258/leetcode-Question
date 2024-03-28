@@ -11,15 +11,14 @@ class Solution {
             {
                 zeroes++;
             }
-            while(zeroes>k)
+           if(zeroes>k)
+           {
+            if(nums[i]==0)
             {
-                if(nums[i]==0)
-                {
-                    zeroes--;
-                }
-                i++;
-
+                zeroes--;
             }
+            i++;
+           }
             maxlength=Math.max(maxlength,j-i+1);
             j++;
         }
