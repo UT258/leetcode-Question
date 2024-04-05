@@ -1,19 +1,25 @@
 class Solution {
     public String makeGood(String s) {
-        StringBuilder sb = new StringBuilder(s);
-        int i=0;
-        while(i<sb.length() - 1){
-            char currentChar = sb.charAt(i);
-            char nextChar = sb.charAt(i+1);
-            if(currentChar - nextChar == 32 || nextChar - currentChar == 32){
-                sb.delete(i,i+2);
-                if(i>0){
-                    i--;
-                }
-            }else{
-                i++;
+        Stack<Character> st = new Stack<>();
+      //to do this first check if the given character is either upper case or lower case
+        //how to there will be a difference of 32 between the upper case and lower case
+        for (char c:s.toCharArray())
+        {
+            if (!st.isEmpty() && Math.abs(st.peek()-c)==32)
+            {
+                st.pop();
             }
+            else
+            {
+                st.push(c);
+            }
+
         }
-        return sb.toString();
+        String ans="";
+        while (!st.isEmpty())
+        {
+            ans=st.pop()+ans;
+        }
+        return ans;
     }
 }
