@@ -1,32 +1,34 @@
 class Solution {
-    public int maxConsecutiveAnswers(String answerkey, int k) {
-        //simple two pointer problem
-        int length=Math.max(maxLen(answerkey,k,'T'),maxLen(answerkey,k,'F'));
-        return length;
-        
-        
-    }
-   private int maxLen(String answerKey, int k, char ch) {
-        int left = 0;
-        int maxLength = 0;
-        int count = 0;
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int maxT = 0;  // To store the maximum length of valid substring considering 'T'
+        int maxF = 0;  // To store the maximum length of valid substring considering 'F'
+        int countT = 0;  // Counter for 'T' characters in the current window
+        int countF = 0;  // Counter for 'F' characters in the current window
+        int left = 0;  // Left pointer for the sliding window
 
         for (int right = 0; right < answerKey.length(); right++) {
-            if (answerKey.charAt(right) != ch) {
-                count++;
+            if (answerKey.charAt(right) == 'T') {
+                countT++;
+            } else {
+                countF++;
             }
 
-            while (count > k) {
-                if (answerKey.charAt(left) != ch) {
-                    count--;
+            // If the number of changes required exceeds k, shrink the window
+            while (Math.min(countT, countF) > k) {
+                if (answerKey.charAt(left) == 'T') {
+                    countT--;
+                } else {
+                    countF--;
                 }
                 left++;
             }
 
-            maxLength = Math.max(maxLength, right - left + 1);
+            // Calculate the maximum length of the valid window
+            maxT = Math.max(maxT, right - left + 1);
+            maxF = Math.max(maxF, right - left + 1);
         }
 
-        return maxLength;
+        // The result is the maximum of both maxT and maxF
+        return Math.max(maxT, maxF);
     }
-
 }
