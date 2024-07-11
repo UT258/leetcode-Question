@@ -1,43 +1,32 @@
 class Solution {
     public int maxConsecutiveAnswers(String answerkey, int k) {
         //simple two pointer problem
-        int length=Math.max(maxlen(answerkey,k,'T'),maxlen(answerkey,k,'F'));
+        int length=Math.max(maxLen(answerkey,k,'T'),maxLen(answerkey,k,'F'));
         return length;
         
         
     }
-    private int maxlen(String answerkey, int k,char ch)
-    {
+   private int maxLen(String answerKey, int k, char ch) {
+        int left = 0;
+        int maxLength = 0;
+        int count = 0;
 
-     int i=0;
-        int j=0;
-        int c=0;
-        int maxlength=0;
-        while(j<answerkey.length())
-        {
-            if(answerkey.charAt(j)==ch)
-            {
-             c++;
+        for (int right = 0; right < answerKey.length(); right++) {
+            if (answerKey.charAt(right) != ch) {
+                count++;
             }
-            if(c>k)
-            {
-                //then shrink the window
-                while(c>k)
-                {   
-                    if(answerkey.charAt(i)==ch)
-                    {
-                        c--;
 
-                    }
-                    i++;
+            while (count > k) {
+                if (answerKey.charAt(left) != ch) {
+                    count--;
                 }
+                left++;
             }
-            if(c<=k)
-            {
-                maxlength=Math.max(maxlength,j-i+1);
-            }
-            j++;
+
+            maxLength = Math.max(maxLength, right - left + 1);
         }
-        return maxlength;
+
+        return maxLength;
     }
+
 }
