@@ -12,59 +12,64 @@ class Solution {
         // you
         m = grid.length;
         n = grid[0].length;
-        int islands = numOfIsland(grid);
+        int island = numOfIsland(grid);
+        if (island > 1 || island == 0) {
+            return 0; // it will take 0 days to disconnect
 
-        // Grid already disconnected
-        if (islands > 1 || islands == 0) {
-            return 0;
-        } else {
-            // Check for 1 move
+        }
+        // if it is not it can be 1 or 2
+        // to check if it is one for everylanad
+        else {
+
+            // now check for everycel
+
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     if (grid[i][j] == 1) {
-                        grid[i][j] = 0; // mark visited
-                        
-                        islands =numOfIsland(grid);
-                        
-                        grid[i][j] = 1; // unmark visited
-                        if (islands > 1 || islands == 0) {
-                            return 1;
+                        // if it is land then conver it into water and check the number of island
+                        grid[i][j]=0;
+                        island = numOfIsland(grid);
+                        // now after this make undo the change
+                        grid[i][j] = 1;// make it land again
+                        if (island > 1 || island == 0) {
+                            return 1;// it can be done in two days
                         }
                     }
                 }
             }
         }
-
-        return 2; //f none of this work means it will surely be disconected in two days
+        return 2; // if none of this work means it will surely be disconected in two days
 
     }
 
-     private void DFS(int[][] grid, int i, int j, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] || grid[i][j] == 0)
+    private void dfs(int i, int j, int[][] grid, boolean[][]vis)
+
+    {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || vis[i][j] || grid[i][j] == 0)
             return;
-
-        visited[i][j] = true; // mark visited
-
-        for (int[] dir : directions) {
-            int new_i = i + dir[0];
-            int new_j = j + dir[1];
-            DFS(grid, new_i, new_j, visited);
+        vis[i][j] = true;// mark it visited
+        for (int arr[] : directions) {
+            int nrow = i + arr[0];
+            int ncol = j + arr[1];
+            // perform dfs
+            dfs(nrow, ncol, grid, vis);// check for all four direction
         }
     }
 
-    private int numOfIsland(int[][] grid) {
-        boolean[][] visited = new boolean[m][n];
-        int islands = 0;
-
+    private int numOfIsland(int grid[][]) {
+        int count = 0;
+        boolean[][] vis = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (!visited[i][j] && grid[i][j] == 1) { // DFS
-                    DFS(grid, i, j, visited);
-                    islands++;
+                if (!vis[i][j] && grid[i][j] == 1) {
+                    // if it is land and not visited
+                    dfs(i, j, grid, vis);
+                    count++;
+
                 }
             }
         }
+        return count;
 
-        return islands;
     }
 }
