@@ -2,7 +2,7 @@ class Solution {
     public int climbStairs(int n) {
         
         //using memoization
-        int arr[]=new int [46];
+        int arr[]=new int [n+1];
         Arrays.fill(arr,-1);//to turn all the element to -1
        return solve(arr,n);
     }
