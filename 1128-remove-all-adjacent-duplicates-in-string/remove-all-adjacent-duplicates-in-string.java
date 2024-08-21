@@ -13,11 +13,6 @@ class Solution {
             st.push(s.charAt(i));
         }
      }
-     String ans="";
-     for(Character ch:st)
-     {
-        ans+=ch;
-     }
-     return ans;
-    }
+     return st.toString().replace("[","").replace("]","").replace(",","").replace(" ","");
+}
 }
