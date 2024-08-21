@@ -13,6 +13,13 @@ class Solution {
             st.push(s.charAt(i));
         }
      }
-     return st.toString().replace("[","").replace("]","").replace(",","").replace(" ","");
+            StringBuilder result = new StringBuilder();
+        for (char c : st) {
+            result.append(c);
+        }
+        
+        // Return the final string
+        return result.toString();
+
 }
 }
