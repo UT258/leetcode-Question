@@ -41,7 +41,7 @@ class Solution {
         return arr[l][r];
     }
     public int strangePrinter(String s) {
-        int arr[][]=new int [s.length()+1][s.length()+1];
+        int arr[][]=new int [s.length()][s.length()];
         for(int temp[]:arr)
         {
             Arrays.fill(temp,-1);
