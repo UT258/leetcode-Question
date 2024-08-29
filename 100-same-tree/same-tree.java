@@ -14,26 +14,17 @@
  * }
  */
 class Solution {
-    //aproach is same just do any traversal on both the trees
-    //if they are equal then tree is same
-    
-    public void preorder(TreeNode node,ArrayList<Integer>list)
-    {
-        if (node==null)
-        {   list.add(null);
-            return ;
-        }
-        list.add(node.val);
-        preorder(node.left,list);
-        preorder(node.right,list);
-    }
     public boolean isSameTree(TreeNode p, TreeNode q) {
-    ArrayList<Integer>l1=new ArrayList<>();
-    ArrayList<Integer>l2=new ArrayList<>();
-    preorder(p,l1);
-    preorder(q,l2);
-    return l1.equals(l2);
-    
+        if(p==null && q==null)
+        {
+            return true;
+        }
+        if(p==null || q==null  )
+        {
+            return false;
+        }
+         return p.val==q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+        
         
     }
 }
