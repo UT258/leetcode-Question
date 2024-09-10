@@ -18,10 +18,10 @@ class Solution {
         ListNode f = head;
         ListNode s = head.next;
 
-        while ( s != null) {
+        while (f!=null &&  s != null) {
             // create a node with gcd
-            int val=gcd(f.val, s.val);
-            ListNode gcdNode = new ListNode(val);
+            
+            ListNode gcdNode = new ListNode(gcd(f.val, s.val));
             // now connect f with gcd
             f.next = gcdNode;
             // gcd should be in between the gcd next should be s
