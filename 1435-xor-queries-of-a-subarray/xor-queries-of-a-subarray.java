@@ -5,11 +5,11 @@ class Solution {
         int []pre=new int [arr.length];
         pre[0]=arr[0];
         int ans[]=new int [queries.length];
-         if(arr.length<=1)
-        {
-            Arrays.fill(ans,arr[0]);
-            return ans;
-        }
+        //  if(arr.length<=1)
+        // {
+        //     Arrays.fill(ans,arr[0]);
+        //     return ans;
+        // }
         for(int i=1;i<arr.length;i++)
         {
             pre[i]=pre[i-1] ^ arr[i];
