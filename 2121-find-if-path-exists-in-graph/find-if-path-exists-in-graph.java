@@ -1,51 +1,35 @@
 class Solution {
-    class DisjointSet {
-    List<Integer> rank = new ArrayList<>();
-    List<Integer> parent = new ArrayList<>();
-    public DisjointSet(int n) {
-        for (int i = 0; i <= n; i++) {
-            rank.add(0);
-            parent.add(i);
-        }
-    }
+    public void dfs(int i, ArrayList<ArrayList<Integer>>adj,boolean []vis)
 
-    public int findUPar(int node) {
-        if (node == parent.get(node)) {
-            return node;
-        }
-        int ulp = findUPar(parent.get(node));
-        parent.set(node, ulp);
-        return parent.get(node);
-    }
+    {
+        vis[i]=true;// mark it vis 
+        for(Integer node:adj.get(i))
 
-    public void unionByRank(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (rank.get(ulp_u) < rank.get(ulp_v)) {
-            parent.set(ulp_u, ulp_v);
-        } else if (rank.get(ulp_v) < rank.get(ulp_u)) {
-            parent.set(ulp_v, ulp_u);
-        } else {
-            parent.set(ulp_v, ulp_u);
-            int rankU = rank.get(ulp_u);
-            rank.set(ulp_u, rankU + 1);
-        }
-    }
-
-}
-
-
-    public boolean validPath(int n, int[][] edges, int source, int destination) {
-        //normal dfs
-        DisjointSet d=new DisjointSet(n);
-        for(int arr[]:edges)
         {
-            d.unionByRank(arr[0],arr[1]);
-            
+            if (!vis[node])
+            {
+                dfs(node,adj,vis);
+            }
         }
-        return d.findUPar(source)==d.findUPar(destination);
-       
+    }
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        //create a adjaceny list
+        ArrayList<ArrayList<Integer>>list=new ArrayList<>();
         
+        for(int i=0;i<n;i++)
+
+        {
+            list.add(new ArrayList<>());
+        }
+
+        for (int arr[]:edges)
+        {
+            list.get(arr[0]).add(arr[1]);
+              list.get(arr[1]).add(arr[0]);
+        }
+        boolean vis[]=new boolean[n];
+           dfs(source,list,vis);
+        //if after dfs if there is path to the destinaton it had been marked
+       return vis[destination];
     }
 }
