@@ -1,25 +1,20 @@
 class Solution {
-
     public String makeFancyString(String s) {
-        char prev = s.charAt(0);
-        int frequency = 1;
         StringBuilder ans = new StringBuilder();
+        if(s.length()<3)
+        {
+            return s;
+        }
+
         ans.append(s.charAt(0));
-        for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i) == prev) {
-                // If the current character is equal to the previous character, increment the
-                // frequency.
-                frequency++;
-            } else {
-                // Otherwise, we can restart the frequency counter with 1, and store the current
-                // character's value in prev.
-                prev = s.charAt(i);
-                frequency = 1;
+        ans.append(s.charAt(1));
+        for (int i = 2; i < s.length(); i++) {
+            if (s.charAt(i) != ans.charAt(ans.length() - 1) || s.charAt(i) != ans.charAt(ans.length() - 2)) {
+                // if they are then frq is still 2
+                ans.append(s.charAt(i));
             }
-            // If the frequency counter has value less than 3, add the character to the
-            // answer string.
-            if (frequency < 3) ans.append(s.charAt(i));
         }
         return ans.toString();
+
     }
 }
