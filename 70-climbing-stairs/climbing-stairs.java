@@ -1,18 +1,22 @@
 class Solution {
     public int climbStairs(int n) {
-        int dp[]=new int [n+1];
+        
         if(n<=2)
         {
             return n;//if it is smaller no need to find the anser
         }
-        dp[1]=1;
-        dp[2]=2;
+        //now using variable only
+        int a=1;
+        int b=2;
+        int c=0;
         for(int i=3;i<=n;i++)
         {
-            dp[i]=dp[i-1]+dp[i-2];
+             c=a+b;
+            a=b;
+            b=c;
 
         }
-        return dp[n];
+        return c;
         
     }
 }
