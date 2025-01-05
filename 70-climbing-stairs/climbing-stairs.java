@@ -1,27 +1,24 @@
 class Solution {
     public int climbStairs(int n) {
+       //bottom up start building soluttion from the base case
+       int dp[]=new int [n+1];
+       //since this is one based indexing
+       Arrays.fill(dp,-1);
+     return  solve(n,dp);
         
-        //using memoization
-        int arr[]=new int [n+1];
-        Arrays.fill(arr,-1);//to turn all the element to -1
-       return solve(arr,n);
     }
-    private int solve(int arr[ ],int n)
-
+    public int solve(int n,int dp[])
     {
-        if (n<0)
-        {
-            return 0;
+        if(n<=2)
+        {   dp[n]=n;
+            return n;
         }
-        if(n==0)
+        if(dp[n]!=-1)
         {
-            return 1;//found a way
+            //already have the answer 
+            return dp[n];
         }
-        if(arr[n]!=-1)
-        {
-            return arr[n]; //if it is not -1 then it means it already calulated so just return it
-        }
-        arr[n]=solve(arr,n-1)+solve(arr,n-2);
-        return arr[n];
+        dp[n]=solve(n-1,dp)+solve(n-2,dp);
+        return dp[n];
     }
 }
