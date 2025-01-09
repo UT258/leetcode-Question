@@ -1,29 +1,29 @@
 class Trie {
-    class Node{
-        Node link[]=new Node[26];
-        boolean flag;
-        public void put(char ch,Node node)
-        {
-            link[ch-'a']=node;
-            //put the element and point to refrence trie
-        }
-        public boolean isEnd()
-        {
-            return flag;
-        }
-        public Node get(char ch)
-        {
-            return link[ch-'a'];
-        }
-        public boolean contains(char ch)
-        {
-            return link[ch-'a']!=null;
-        }
-        public void setEnd()
-        {
-            flag=true;
-        }
+   class Node {
+    Map<Character, Node> children = new HashMap<>();
+    boolean isEnd;
+
+    public void put(char ch, Node node) {
+        children.put(ch, node);
     }
+
+    public Node get(char ch) {
+        return children.get(ch);
+    }
+
+    public boolean contains(char ch) {
+        return children.containsKey(ch);
+    }
+
+    public void setEnd() {
+        isEnd = true;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+}
+
     Node root;
      
     public Trie() {
