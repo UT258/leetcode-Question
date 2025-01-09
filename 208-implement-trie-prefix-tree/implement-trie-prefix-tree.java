@@ -1,82 +1,26 @@
 class Trie {
-   class Node {
-    Map<Character, Node> children = new HashMap<>();
-    boolean isEnd;
-
-    public void put(char ch, Node node) {
-        children.put(ch, node);
-    }
-
-    public Node get(char ch) {
-        return children.get(ch);
-    }
-
-    public boolean contains(char ch) {
-        return children.containsKey(ch);
-    }
-
-    public void setEnd() {
-        isEnd = true;
-    }
-
-    public boolean isEnd() {
-        return isEnd;
-    }
-}
-
-    Node root;
-     
+    List<String> x;
     public Trie() {
-        root=new Node();//intialize the root
+        x=new ArrayList<String>();//initializing 
     }
     
     public void insert(String word) {
-        Node node=root;
-        for(int i=0;i<word.length();i++)
-        {
-            if(!node.contains(word.charAt(i)))
-            {
-                //means it does not contain create a new one
-                node.put(word.charAt(i),new Node());
-            }
-            //move to the refrence trie
-            node=node.get(word.charAt(i));
-        }
-        //if we are at the end of the striing set the end of this current 
-        //reference trie to true
-        node.setEnd();
+        x.add(word);//inserting a word 
     }
     
     public boolean search(String word) {
-        //now to search go to each of the char by character
-        Node node=root;
-        for(int i=0;i<word.length();i++)
-        {
-            if(!node.contains(word.charAt(i)))
-            {
-                return false;
-            }
-            //move to the next ref trie
-            node=node.get(word.charAt(i));
-
-        }
-        //now check if you finished the word or not 
-        //if you are the end of the word if this is the end word
-        //then only we considered true
-        return node.isEnd();
+        return (x.contains(word)==true);//if it contains or not
     }
     
     public boolean startsWith(String prefix) {
-        Node node =root;
-        for(int i=0;i<prefix.length();i++)
+        for(String y:x)
         {
-            if(!node.contains(prefix.charAt(i)))
+            if(y.startsWith(prefix)==true)//checking each word on the list with the prefix
             {
-                return false;
+                return true;
             }
-            node=node.get(prefix.charAt(i));
         }
-        return true;//if you are at the end then word can 
+        return false;
     }
 }
 
