@@ -23,7 +23,7 @@ class Solution {
         // XOR numbers that appear odd number of times
         int ans = 0;
         for (int num : freq.keySet()) {
-            if (freq.get(num) % 2 == 1) {
+            if (freq.get(num) % 2!=0) {
                 ans ^= num;
             }
         }
