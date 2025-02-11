@@ -8,7 +8,7 @@ class Solution {
         for (char ch : s.toCharArray()) {
             st.push(ch);
             
-            // Check if the top `partLength` characters match `part`
+            // Check if the last `partLength` characters match `part`
             if (st.size() >= partLength) {
                 boolean match = true;
                 for (int i = 0; i < partLength; i++) {
@@ -18,7 +18,7 @@ class Solution {
                     }
                 }
                 
-                // Remove `part` from stack
+                // If match is found, pop `partLength` characters
                 if (match) {
                     for (int i = 0; i < partLength; i++) {
                         st.pop();
@@ -34,10 +34,6 @@ class Solution {
         }
         return ans.toString();
     }
-
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-        System.out.println(sol.removeOccurrences("daabcbaabcbc", "abc")); // Output: "dab"
-        System.out.println(sol.removeOccurrences("axxxxyyyyb", "xy"));    // Output: "ab"
-    }
+    
+    
 }
