@@ -1,78 +1,69 @@
-class Solution {
-    List<List<String>> ans=new ArrayList<>();
+public class Solution {
+    private List<List<String>> result = new ArrayList<>();
+
     public List<List<String>> solveNQueens(int n) {
-    List<String>board=new ArrayList<>();
-    //fill the string with empty string 
-    for(int i=0;i<n;i++)
-    {
-        StringBuilder row=new StringBuilder();
-        for(int j=0;j<n ;j++)
-        {
-            row.append(".");
-        }
-        board.add(row.toString());//convert it into row
-    }
-    solve(board,0,n);
-    return ans;
-    
-        
-    }
-    public boolean isValid(List<String>board,int row ,int col)
-    {
-        //check for the upper section
-        for(int i=row;i>=0;i--)
-        {
-            //col remain the same row will decrease we will move foward
-            if(board.get(i).charAt(col)=='Q')
-            {
-                return false;
-            }
-        }
-        //for left diagonal
-        for(int i=row , j=col ;j>=0 && i>=0 ; j--,i--)
-        {
-            if(board.get(i).charAt(j)=='Q')
-            {
-                return false;
-            }
-        }
-        //for right
-       for(int i=row , j=col ;j<board.size() && i>=0 ; j++,i--)
-        {
-            if(board.get(i).charAt(j)=='Q')
-            {
-                return false;
-            }
-        }
-        return true;//none of this happen we can place the queen
+        if (n == 0)
+            return result;
 
-        
-    }
-    public void solve(List<String>board,int row,int n)
-    {
-        //i will start from row 0
-        // i try putting queen in every col of the row
-        if(row==n)
-        {
-            // i put all the queen
-            ans.add(new ArrayList<>(board));//add the current ans
-            return ;
-        }
-        for(int col=0;col<n;col++)
-        {
-            //put the queen
-            if(isValid(board,row,col))
-           { 
-            StringBuilder nrow=new StringBuilder(board.get(row));
-            nrow.setCharAt(col,'Q');//put the queen
-            board.set(row,nrow.toString());
-            //backtrack what you did
-            solve(board,row+1,n);
-            nrow.setCharAt(col,'.');//put the queen
-            board.set(row,nrow.toString());
+        List<String> board = new ArrayList<>();
+        // For, n = 3, board = {"...", "...", "..."} initially
+        for (int i = 0; i < n; i++) {
+            StringBuilder row = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                row.append('.');
+            }
+            board.add(row.toString());
         }
 
+        int startRow = 0;
+        HashSet<Integer> cols = new HashSet<>();
+        HashSet<Integer> diags = new HashSet<>();
+        HashSet<Integer> antiDiags = new HashSet<>();
+        solve(board, startRow, cols, diags, antiDiags);
+
+        return result;
+    }
+
+    private void solve(List<String> board, int row, HashSet<Integer> cols, HashSet<Integer> diags, HashSet<Integer> antiDiags) {
+        if (row == board.size()) {
+            result.add(new ArrayList<>(board));
+            return;
         }
-        
+
+        /*
+         * For a square (i, j) : Diagonally (i-j) is constant Anti diagonally (i+j) is
+         * constant
+         * 
+         * We can use this to find which square (i, j) has a risk of being attacked
+         * by another queen placed already in 'diagonal', or 'anti-diagonal' or
+         * 'column'
+         */
+
+        for (int col = 0; col < board.size(); col++) {
+            int diagId = row - col;
+            int antiDiagId = row + col;
+
+            /*
+             * If the col, or diagonal or anti_diagonal are used means one of them has a
+             * Queen placed already which can attack, so look for other column
+             */
+            if (cols.contains(col) || diags.contains(diagId) || antiDiags.contains(antiDiagId))
+                continue;
+
+            cols.add(col);
+            diags.add(diagId);
+            antiDiags.add(antiDiagId);
+            StringBuilder newRow = new StringBuilder(board.get(row));
+            newRow.setCharAt(col, 'Q');
+            board.set(row, newRow.toString());
+
+            solve(board, row + 1, cols, diags, antiDiags);
+
+            cols.remove(col);
+            diags.remove(diagId);
+            antiDiags.remove(antiDiagId);
+            newRow.setCharAt(col, '.');
+            board.set(row, newRow.toString());
+        }
     }
 }
