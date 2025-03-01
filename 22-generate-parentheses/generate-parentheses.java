@@ -24,15 +24,15 @@ class Solution {
     public void solve(String s, int n) {
         if (s.length() == 2 * n) {
             if (isvalid(s))
-                ans.add(s);
-            return;
-        }
+            ans.add(s);
+                return;
 
+        }
         s += '(';
         solve(s, n);
-        s = s.substring(0, s.length() - 1); // remove the last character
-
+        s=s.substring(0, s.length() - 1);
         s += ')';
         solve(s, n);
+
     }
 }
