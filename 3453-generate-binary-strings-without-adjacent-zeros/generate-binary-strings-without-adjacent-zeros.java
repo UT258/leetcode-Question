@@ -1,36 +1,27 @@
+import java.util.*;
+
 class Solution {
-    List<String>ans=new ArrayList<>();
+    List<String> ans = new ArrayList<>();
+
     public List<String> validStrings(int n) {
-         solve("",n);
-         return ans;
-        
+        solve("", n);
+        return ans;
     }
-    public boolean isvalid(String s)
-    {    
-        for(int i=0;i<s.length()-1;i++)
-        {
-            char ch=s.charAt(i);
-            if(ch=='0')
-            {
-                if(s.charAt(i+1)=='0')
-                {
-                    return false;
-                }
-            }
+
+    public void solve(String s, int n) {
+        if (s.length() == n) {
+            ans.add(s);
+            return;
         }
-        return true;
+
+        // Add '1' and recurse
+        solve(s + '1', n);
+
+        // Add '0' only if the previous character is not '0'
+        if (s.isEmpty() || s.charAt(s.length() - 1) != '0') {
+            solve(s + '0', n);
+        }
     }
-    public void solve(String s,int n)
-    {
-     if(s.length()==n){
-        if(isvalid(s))
-        ans.add(s);
-        return ;
-     }
-     s+='1';
-     solve(s,n);
-     s=s.substring(0,s.length()-1);
-     s+='0';
-     solve(s,n);
-    }
+
+    
 }
