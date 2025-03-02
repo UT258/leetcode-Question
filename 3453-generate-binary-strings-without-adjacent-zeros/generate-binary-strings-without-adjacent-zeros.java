@@ -14,13 +14,13 @@ class Solution {
             return;
         }
 
-        // Add '1' and recurse
-        solve(s + '1', n);
-
-        // Add '0' only if the previous character is not '0'
-        if (s.isEmpty() || s.charAt(s.length() - 1) != '0') {
-            solve(s + '0', n);
-        }
+       
+       solve(s+'1',n);
+       if(s.isEmpty() || s.charAt(s.length()-1)!='0')
+       {
+        
+        solve(s+'0',n);
+       }
     }
 
     
