@@ -1,47 +1,23 @@
 class Solution {
-    public boolean valid (char ch)
-    {
-        return ch=='a' || ch=='b' || ch=='c';
-    }
     public int numberOfSubstrings(String s) {
-        HashMap<Character,Integer>map=new HashMap<>();
-        int  i=0;
-        int j=0;
-        int c=0;
-        int n=s.length();
-        while(j<s.length())
+        
+        int count = 0;
+        int lastseen[] = new int[3];
+        Arrays.fill(lastseen,-1);
+        for (int i = 0; i < s.length(); i++)
+
         {
-          char ch=s.charAt(j);
-          if(ch=='a' || ch== 'b' || ch=='c')
-          {
-            map.put(ch,map.getOrDefault(ch,0)+1);
+            char ch = s.charAt(i);
+            lastseen[ch - 'a']=i;
+            
+count +=1 + Math.min(Math.min(lastseen[0],lastseen[1]),lastseen[2]);// the minimum will be starting
+                                                                                       // of the valid window and the
+                                                                                       // sustring that have that i as
+                                                                                       // its last character will be i+1
+            
 
-          }
-          
-          while(map.size()==3)
-          {
-            //remove the entry of it in the map 
-            char rm=s.charAt(i);
-            c+=n-j;
-            map.put(rm,map.get(rm)-1);
-            if(map.get(rm)==0)
-            {
-                map.remove(rm);//if the frq is zero remove it 
-
-            }
-            i++;
-          }
-          //now shrink the window 
-    
-          j++;
-           
-
-          
         }
-        return c;
-        
-        
-    }
+        return count;
 
-    
+    }
 }
