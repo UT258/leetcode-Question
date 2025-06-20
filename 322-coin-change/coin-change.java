@@ -1,12 +1,40 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-         int dp[][]=new int[coins.length+1][amount+1];
-        for(int temp[]:dp)
+        final int max=Integer.MAX_VALUE-1; //-1 so that overflow when i add 1
+        int n=coins.length;
+        int dp[][]=new int [n+1][amount+1];
+        //fill the base case first 
+        for(int i=0;i<=amount;i++)
         {
-            Arrays.fill(temp,-1);
+            dp[0][i]=max; //how many sum you can form when  you have 0 element
+            //infinity
+            
         }
-         int res = coins(coins, amount, coins.length,dp);
-        return res == Integer.MAX_VALUE - 1 ? -1 : res;
+        for(int i=0;i<=coins.length;i++)
+        {
+            dp[i][0]=0; //how many coins you need to form 0 
+            
+        }
+         for(int i=1;i<=coins.length;i++){
+          for (int j=1;j<=amount;j++){
+              if(coins[i-1]<=j)
+              {  //take and no take case
+                  int take=1+dp[i][j-coins[i-1]];//if i take it since we have unlimited supply when we decide to pick we may pick it again
+                  int notake=dp[i-1][j];
+               dp[i][j]=Math.min(take,notake);
+
+              }
+              else{
+                  dp[i][j]=dp[i-1][j];//we cannot take it since it is greater
+              }
+          }
+
+      }
+      int ans=dp[coins.length][amount];
+      return  ans==Integer.MAX_VALUE-1?-1:ans;
+        
+        
+
 
     }
 
