@@ -1,31 +1,37 @@
 class Solution {
-public String longestPalindrome(String s) {
-    int max = 0;
-    String ans = "";
-    for (int i = 0; i < s.length(); i++) {
-        for (int j = i; j < s.length(); j++) { // start j from i
-            if (ispalindrome(s.substring(i, j + 1))) {
-                if (j - i + 1 > max) { // check if the current length is greater than max
-                    max = j - i + 1;
-                    ans = s.substring(i, j + 1);
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        if (n == 0) return "";
+
+        boolean[][] dp = new boolean[n][n];
+        int start = 0, maxLen = 1;
+
+        // Every single character is a palindrome
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+        }
+
+        // Check for substrings of length 2
+        for (int i = 0; i < n - 1; i++) {
+            if (s.charAt(i) == s.charAt(i+1)) {
+                dp[i][i+1] = true;
+                start = i;
+                maxLen = 2;
+            }
+        }
+
+        // Check for substrings of length >= 3
+        for (int len = 3; len <= n; len++) {
+            for (int i = 0; i <= n - len; i++) {
+                int j = i + len - 1;
+                if (s.charAt(i) == s.charAt(j) && dp[i+1][j-1]) {
+                    dp[i][j] = true;
+                    start = i;
+                    maxLen = len;
                 }
             }
         }
-    }
-    return ans;
-}
 
-public boolean ispalindrome(String s) {
-    int start = 0;
-    int end = s.length() - 1;
-    while (start < end) { // use '<' instead of '<='
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-        start++;
-        end--;
+        return s.substring(start, start + maxLen);
     }
-    return true;
-}
-
 }
