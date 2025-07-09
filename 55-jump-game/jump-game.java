@@ -1,14 +1,30 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        int max=0;
-        for(int i=0;i<nums.length;i++)
+        Boolean dp[]=new Boolean [nums.length+1];
+      
+        return solve(nums,0,dp);
+    }
+    private boolean solve(int arr[],int i,Boolean dp[])
+    {
+        if(i==arr.length-1)
         {
-            if(i>max) return false;
-            //we will find the maximum we can reach index we can reach every point 
-            max=Math.max(max,i+nums[i]);
+            return true; //able to reach the last index
 
         }
-        return true;
-        
+          if (i >= arr.length) {
+            return false;
+        }
+        if(dp[i]!=null)return dp[i];
+        // 3) Try every possible jump length from 1 up to arr[i]
+        for (int step = 1; step <= arr[i]; step++) {
+            if (solve(arr, i + step,dp)) {
+                return dp[i]= true;
+            }
+        }
+
+        //i represent if i start from ind can i reach the last 
+        return dp[i]=false;
+
     }
+    
 }
