@@ -1,75 +1,62 @@
 class Solution {
 
     class Dsu {
-        ArrayList<Integer> rank = new ArrayList<>();
-        ArrayList<Integer> parent = new ArrayList<>();
+        int[] parent;
+        int[] rank;
 
         public Dsu(int n) {
-            rank.clear();
-            parent.clear();
-            for (int i = 0; i <= n; i++) {
-                //making in gen graph 0 as well as 1 base index
-                rank.add(0);
-                parent.add(i);
+            parent = new int[n];
+            rank = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+                rank[i] = 0;
             }
-
         }
 
         public int findUpar(int node) {
-            if (node == parent.get(node)) {
-                //this is mean we find that is ultimate parent of itself
-                return node;
+            if (parent[node] != node) {
+                parent[node] = findUpar(parent[node]); // Path compression
             }
-            //path compression
-            parent.set(node, findUpar(parent.get(node)));
-            return parent.get(node);
+            return parent[node];
         }
 
-        public void unionByrank(int u, int v) {
+        public void unionByRank(int u, int v) {
             int ulp_u = findUpar(u);
             int ulp_v = findUpar(v);
-            //connec the smaller one to larger one 
-            if (rank.get(ulp_u) < rank.get(ulp_v))
 
-            {
-                parent.set(ulp_u, ulp_v);
+            if (ulp_u == ulp_v) return; // Already in same set
 
-            }
-            if (rank.get(ulp_u) > rank.get(ulp_v))
-
-            {
-                parent.set(ulp_v, ulp_u);
-
+            if (rank[ulp_u] < rank[ulp_v]) {
+                parent[ulp_u] = ulp_v;
+            } else if (rank[ulp_v] < rank[ulp_u]) {
+                parent[ulp_v] = ulp_u;
             } else {
-                //they are equal then rank will increase
-                //since rank are equal connecct anyone
-                parent.set(ulp_u, ulp_v);
-                rank.set(ulp_v, rank.get(ulp_v) + 1);
+                parent[ulp_u] = ulp_v;
+                rank[ulp_v]++;
             }
-
         }
     }
 
     public int findCircleNum(int[][] isConnected) {
-        // now using the disjoint set
-        //create dsu
-        int v = isConnected.length;
-        Dsu dsu = new Dsu(v);
-        for (int i = 0; i < v; i++) {
-            for (int j = 0; j < v; j++) {
+        int n = isConnected.length;
+        Dsu dsu = new Dsu(n);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 if (isConnected[i][j] == 1 && i != j) {
-                    //there is a edge between u and v
-                    dsu.unionByrank(i, j);
+                    dsu.unionByRank(i, j);
                 }
             }
         }
+
+        // Count the number of unique parents
         int count = 0;
-        for (int i = 0; i <v; i++) {
+        for (int i = 0; i < n; i++) {
             if (dsu.findUpar(i) == i) {
                 count++;
             }
         }
-        return count;
 
+        return count;
     }
 }
