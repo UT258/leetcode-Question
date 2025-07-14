@@ -1,27 +1,24 @@
 class Solution {
     public String getHint(String secret, String guess) {
         int bulls = 0, cows = 0;
-        HashMap<Character, Integer> map = new HashMap<>();
+        int[] secretFreq = new int[10]; // freq of digits 0–9 in secret
+        int[] guessFreq = new int[10];  // freq of digits 0–9 in guess
 
-        // Step 1: Count bulls and prepare map from unmatched secret characters
         for (int i = 0; i < secret.length(); i++) {
-            if (secret.charAt(i) == guess.charAt(i)) {
+            char s = secret.charAt(i);
+            char g = guess.charAt(i);
+            if (s == g) {
                 bulls++;
             } else {
-                char s = secret.charAt(i);
-                map.put(s, map.getOrDefault(s, 0) + 1);
+                // Store unmatched digits for cow calculation
+                secretFreq[s - '0']++;
+                guessFreq[g - '0']++;
             }
         }
 
-        // Step 2: Count cows from unmatched guess characters
-        for (int i = 0; i < guess.length(); i++) {
-            if (secret.charAt(i) != guess.charAt(i)) {
-                char g = guess.charAt(i);
-                if (map.containsKey(g) && map.get(g) > 0) {
-                    cows++;
-                    map.put(g, map.get(g) - 1);
-                }
-            }
+        // Count cows: for each digit, take the minimum of secret and guess frequencies
+        for (int i = 0; i < 10; i++) {
+            cows += Math.min(secretFreq[i], guessFreq[i]);
         }
 
         return bulls + "A" + cows + "B";
