@@ -1,25 +1,29 @@
 class Solution {
-    int count=0;
-    public void checkcenter(int i,int j,int n,String s)
-    {
-        while(i>=0 && j<n && s.charAt(i)==s.charAt(j))
-        {
-            count++;
-            i--;//move the left
-            j++;
-
-        }
-        
-    }
     public int countSubstrings(String s) {
-        //even and  odd length logic 
-          for(int i=0;i<s.length();i++)
-          {
-            checkcenter(i,i,s.length(),s);//check for odd len substring
-            checkcenter(i,i+1,s.length(),s);//check for even length two center
+        int n = s.length();
+        int count = 0;
+        boolean dp[][] = new boolean[n][n];
+        for (int l = 1; l <= n; l++) {
+            for (int i = 0; i + l <= n; i++) {
+                int j = i + l - 1;// j index
+                if (i == j) {
+                    //1 length
+                    dp[i][j] = true;
+                } else if (i + 1 == j) {
+                    //length 2 substring
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
 
-          }
-          return count;
-        
+                } else {
+                    //more than 2
+                    dp[i][j] = s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1];
+                }
+                if (dp[i][j]) {
+                    count++;
+                }
+            }           
+        }
+        return count;
+
     }
+
 }
