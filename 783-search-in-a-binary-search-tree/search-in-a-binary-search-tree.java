@@ -33,7 +33,7 @@ class Solution {
                 root =root.left;
             }
         }
-        return null;
+        return root;
         
     }
 }
