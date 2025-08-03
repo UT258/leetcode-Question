@@ -1,34 +1,22 @@
 class Solution {
     public int[] rearrangeArray(int[] nums) {
-       int []pos=new int [nums.length/2];
-        int []neg=new int [nums.length/2];
-        int j=0;
-        int k=0;
-        for (int i=0;i<nums.length;i++)
+        int ans[]=new int[nums.length];
+        int i=0;//even indx for pos
+        int j=1;//odd inde for neg
+        for(int n:nums)
         {
-            if (nums[i]<0)
+            if(n<0)
             {
-                neg[j]=nums[i];
-                j++;
+                //if its a negativ put it in odd index
+                ans[j]=n;
+                j+=2;
             }
             else{
-                pos[k]=nums[i];
-                k++;
+                ans[i]=n;
+                i+=2;
             }
-
         }
-        k=0;
-        j=0;
-        //here i will get the postive and negative
-        int i=0;
-        while(i<nums.length)
-        {
-            nums[i]=pos[k% pos.length];
-            k++;
-            nums[i+1]=neg[j% neg.length];
-            j++;
-            i+=2;
-        }
-        return nums;
+        return ans;
+        
     }
 }
