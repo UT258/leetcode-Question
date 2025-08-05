@@ -23,17 +23,7 @@ class Solution {
         }
 
         // Early pruning: check if both strings have the same characters
-        int[] count = new int[26];
-        for (int i = 0; i < s1.length(); i++) {
-            count[s1.charAt(i) - 'a']++;
-            count[s2.charAt(i) - 'a']--;
-        }
-        for (int c : count) {
-            if (c != 0) {
-                memo.put(key, false);
-                return false;
-            }
-        }
+
 
         int n = s1.length();
         for (int i = 1; i < n; i++) {
