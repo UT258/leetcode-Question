@@ -1,35 +1,34 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-     Arrays.sort(nums); // Step 1: Sort the array
+         HashMap<Integer,Integer>map=new HashMap<>();
+         
+         for(int n:nums )
+         {
+            map.put(n,map.getOrDefault(n,0)+1);
 
-        List<int[]> freqList = new ArrayList<>();
-        int start = 0;
-        int n = nums.length;
-
-        // Step 2: Use while loop to count frequencies
-        while (start < n) {
-            int end = start;
-
-            // Move end pointer until number changes
-            while (end < n && nums[end] == nums[start]) {
-                end++;
+         }
+         PriorityQueue<int []>pq=new PriorityQueue<>(
+            (a,b) -> (a[1]-b[1])
+         );
+         for(Map.Entry<Integer,Integer>entry:map.entrySet()){
+            pq.offer(new int []{entry.getKey(),entry.getValue()});
+            if(pq.size()>k)
+            {
+               pq.poll();
             }
-
-            int freq = end - start; // frequency of nums[start]
-            freqList.add(new int[]{nums[start], freq});
-
-            start = end; // move start to the next unique element
-        }
-
-        // Step 3: Sort by frequency in descending order
-        freqList.sort((a, b) -> Integer.compare(b[1], a[1]));
-
-        // Step 4: Collect top k frequent elements
-        int[] result = new int[k];
+         }
+         int[] result = new int[k];
+    
+       
         for (int i = 0; i < k; i++) {
-            result[i] = freqList.get(i)[0];
+            result[i] = pq.poll()[0];  // take the element (not frequency)
         }
+
+        
 
         return result;
+
+         //i have the frq
+
     }
 }
