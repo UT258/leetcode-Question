@@ -9,8 +9,9 @@ class Solution {
 
     public void helper(int[] arr, int i, ArrayList<Integer> list) {
         if (i == arr.length) {
-            if (!ans.contains(new ArrayList<>(list))) {
-                ans.add(new ArrayList<>(list));
+            List<Integer>temp=new ArrayList<>(list);
+            if (!ans.contains(temp)) {
+                ans.add(temp);
             }
             return;
         }
