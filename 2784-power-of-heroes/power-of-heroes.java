@@ -1,11 +1,26 @@
+import java.util.*;
+
 class Solution {
     public int sumOfPower(int[] nums) {
-        long mod = (long) 1e9 + 7, pre = 0, res = 0;
+        final long MOD = 1_000_000_007L;
         Arrays.sort(nums);
-        for (long x : nums) {
-            res = (res + (x * x % mod) * x % mod + (x * x % mod) * pre % mod) % mod;
-            pre = (pre * 2 + x) % mod;
+
+        long ans = 0L;
+        long s = 0L; // running sum of minimums of all groups formed so far
+
+        for (int v : nums) {
+            long x = v % MOD;
+
+            // contrib = x^2 * (sum of minimums for all groups where x is the maximum)
+            //          = x^2 * (x + s)
+            long contrib = ( (x * x) % MOD ) * ((x + s) % MOD) % MOD;
+            ans = (ans + contrib) % MOD;
+
+            // Update s for next iterations:
+            // Every existing group can be extended with x (min unchanged),
+            // plus the singleton group {x}.
+            s = ( (2L * s) % MOD + x ) % MOD;
         }
-        return (int) res;
+        return (int)(ans % MOD);
     }
 }
