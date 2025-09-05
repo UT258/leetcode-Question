@@ -23,38 +23,27 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if(root==null || (root.left==null && root.right==null))
+        if(root==null)
         {
             return root;
         }
-        Queue<Node> q=new LinkedList<>();
- 
-        q.offer(root.left);
-        q.offer(root.right);
-        //there will be no  right for the root node
-
-         
-        while(!q.isEmpty())
+        Node leftmost=root;
+        while(leftmost.left!=null)
         {
-          int level=q.size();
-          Node prev=null;
-          for(int i=0;i<level;i++){
-            Node current=q.poll();
-            if(prev!=null){
-                prev.next=current;
-            }
-            prev=current;
-            //now add the childern 
-            if(current.left!=null){
-                q.offer(current.left);
-            }
-            if(current.right!=null){
-                q.offer(current.right);
-            }
+            Node current=leftmost;
+            while(current!=null)
+            {
+                //connect its childern togther
+                current.left.next=current.right;
+                if(current.next!=null)
+                {
+                  current.right.next=current.next.left;
 
-          }          
+                }
+                current=current.next;
+            }
+            leftmost=leftmost.left;
         }
         return root;
-        
     }
 }
