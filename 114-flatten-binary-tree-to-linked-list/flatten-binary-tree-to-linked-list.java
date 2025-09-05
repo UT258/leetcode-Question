@@ -15,30 +15,26 @@
  */
 class Solution {
     public void flatten(TreeNode root) {
-        //implementaion probelm
-        TreeNode current =root;
-        while(current!=null)
-        {
-            //put the remainging in the left subtree where is no right
-            if(current.left!=null)
-            {
-                TreeNode temp=current.left;
-                while(temp.right!=null)
-            {
-                temp=temp.right;
+        TreeNode current = root;
+
+        while (current != null) {
+            if (current.left != null) {
+                // find the rightmost node of left subtree
+                TreeNode temp = current.left;
+                while (temp.right != null) {
+                    temp = temp.right;
+                }
+
+                // connect it to the right subtree
+                temp.right = current.right;
+
+                // move left subtree to right
+                current.right = current.left;
+                current.left = null;
             }
 
-            
-            
-            //here i will get the right most in lT
-            temp.right=current.right;
-            current.right=current.left;
-            //and now connect the remainging
-            current.left=null;
-            }
-            current=current.right;
-
+            // move to the next node
+            current = current.right;
         }
-        
     }
 }
