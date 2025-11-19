@@ -7,7 +7,7 @@ class Solution {
         }
         while(set.contains(original))
         {
-            original=original*2;
+            original=original << 1;
         }
         return original;
         
