@@ -1,11 +1,25 @@
 class Solution {
     public int[] sortedSquares(int[] nums) {
-        for(int i=0;i<nums.length;i++)
-
+        int ans []=new int [nums.length];
+        int i=0;
+        int j=nums.length-1;
+        int k=j;
+        while(i<=j)
         {
-            nums[i]=nums[i]*nums[i];
+            int a=nums[i]*nums[i];
+            int b=nums[j]*nums[j];
+            if(a>b)
+            {
+                ans[k]=a;
+                
+               i++;
+            }
+            else{
+                ans[k]=b;
+                j--;
+            }
+            k--;
         }
-       Arrays.sort(nums);
-        return nums;
+        return ans;
     }
 }
