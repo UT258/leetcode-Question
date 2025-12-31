@@ -1,30 +1,23 @@
 class Solution {
+     private static boolean valid(String temp) {
+        String rev=new StringBuilder(temp).reverse().toString();
+        return rev.equals(temp);
+
+    }
     public boolean isPalindrome(String s) {
-        
-        StringBuilder st=new StringBuilder();
-        for (int k = 0; k < s.length(); k++)
+        String temp="";
+        for(char ch:s.toCharArray())
         {
-            char c = s.charAt(k);
-
-            if (Character.isLetterOrDigit(c)) 
+            if(Character.isLetterOrDigit(ch))
             {
-                st.append(Character.toLowerCase(c));
+             temp+=Character.toLowerCase(ch);
             }
         }
-        s=st.toString();//reassign
-        int i=0;
-        int j=s.length()-1;
-        while(i<j)
-        {   
-            if(s.charAt(i)!=s.charAt(j))
-            {
-                return false;
-            }
-            i++;
-            j--;
+        if(valid(temp))
+        {
+            return true;
         }
-        return true;
 
-        
+        return  false;
     }
 }
