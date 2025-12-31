@@ -1,7 +1,13 @@
 class Solution {
      private static boolean valid(String temp) {
-        String rev=new StringBuilder(temp).reverse().toString();
-        return rev.equals(temp);
+       for(int i=0;i<temp.length();i++)
+       {
+         if(temp.charAt(i)!=temp.charAt(temp.length()-1-i))
+         {
+            return false;
+         }
+       }
+       return true;
 
     }
     public boolean isPalindrome(String s) {
