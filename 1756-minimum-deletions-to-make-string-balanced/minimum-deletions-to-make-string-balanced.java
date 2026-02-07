@@ -9,7 +9,7 @@ class Solution {
                 //if top is you can place a after it
                 st.pop();
                 count++;
-            }
+            }//enter the number of the element in the list 
             else
             {
                 //if top is a you can place b after it you can just push it
