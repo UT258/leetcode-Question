@@ -1,17 +1,23 @@
 class Solution {
     public int rob(int[] nums) {
-        //bottom up aproach
-        int t[]=new int [nums.length+1];
-         t[0]=0;//profit till 0 house no house no profit
-        t[1]=nums[0];
-        for(int i=2;i<=nums.length;i++)
+        int n=nums.length;
+       int dp[] =new int [n+1];
+       dp[0]=0;
+       dp[1]=nums[0];
+       for(int i=2;i<=n;i++)
+       {
+       dp[i]=Math.max(nums[i-1]+dp[i-2],dp[i-1]);
+       }
+       return dp[n];
+    }
+    public int solve(int arr[],int i)
+    {
+        if(i>=arr.length)
         {
-            int steal=nums[i-1]+t[i-2]; //if i steal i cannot take profit of i-1 cuz its adjacent
-            int skip=t[i-1];//if we didnt steal i can take that profit
-            t[i]=Math.max(steal,skip);
-
+            return 0;//no max profit 
         }
-        return t[nums.length];
-        
+        return Math.max(
+            arr[i]+solve(arr,i+2) , solve(arr,i+1)
+        );
     }
 }
