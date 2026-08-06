@@ -1,27 +1,27 @@
 import java.util.*;
 
 class Solution {
-    List<String> ans = new ArrayList<>();
 
     public List<String> validStrings(int n) {
-        solve("", n);
-        return ans;
+        return solve("", n);
     }
 
-    public void solve(String s, int n) {
+    public List<String> solve(String s, int n) {
+        List<String> res = new ArrayList<>();
+
         if (s.length() == n) {
-            ans.add(s);
-            return;
+            res.add(s);
+            return res;
         }
 
-       
-       solve(s+'1',n);
-       if(s.isEmpty() || s.charAt(s.length()-1)!='0')
-       {
-        
-        solve(s+'0',n);
-       }
-    }
+        // Always append '1'
+        res.addAll(solve(s + "1", n));
 
-    
+        // Append '0' only if previous character is not '0'
+        if (s.isEmpty() || s.charAt(s.length() - 1) != '0') {
+            res.addAll(solve(s + "0", n));
+        }
+
+        return res;
+    }
 }
