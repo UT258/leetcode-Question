@@ -10,11 +10,15 @@ class Solution {
         for(int i=0;i<rocks.length;i++)
         {
             //first try to complete the capacirt that need the min rocks first
+
             if(capacity[i]<=additionalRocks)
             {
                 //i can fill this bag completeyy
                 count++;
                 additionalRocks-=capacity[i];
+            }
+            else{
+                break;
             }
         }
         return count;
